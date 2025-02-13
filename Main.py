@@ -14,16 +14,19 @@ def analyze_cv():
     prompt = f"Analyze the following CV and extract the top 10 skills of the candidate:\n{cv_text}\n\nReturn only the skills as bullet points."
     
     try:
-        response = openai.ChatCompletion.create(
+        client = openai.OpenAI()  # Create an OpenAI client
+        response = client.chat.completions.create(
             model="gpt-4",
-            messages=[{"role": "system", "content": "You are an expert assistant in CV analysis."},
-                      {"role": "user", "content": prompt}]
+            messages=[
+                {"role": "system", "content": "You are an expert assistant in CV analysis."},
+                {"role": "user", "content": prompt}
+            ]
         )
-        skills = response["choices"][0]["message"]["content"]
+        skills = response.choices[0].message.content
         result_text.delete("1.0", tk.END)
         result_text.insert(tk.END, skills)
     except Exception as e:
-        result_label.config(text=f"Error processing: {e}. Please ensure you have set your OpenAI API key correctly.")
+        result_label.config(text=f"Error processing: {e}. Please ensure you have set your OpenAI API key correctly and are using a compatible OpenAI package version.")
 
 # Create main window
 window = tk.Tk()
