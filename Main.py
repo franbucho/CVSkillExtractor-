@@ -23,7 +23,7 @@ def analyze_cv():
         result_text.delete("1.0", tk.END)
         result_text.insert(tk.END, skills)
     except Exception as e:
-        result_label.config(text=f"Error processing: {e}")
+        result_label.config(text=f"Error processing: {e}. Please ensure you have set your OpenAI API key correctly.")
 
 # Create main window
 window = tk.Tk()
